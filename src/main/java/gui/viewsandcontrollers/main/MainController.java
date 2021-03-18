@@ -4,10 +4,13 @@ import java.io.IOException;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.scene.control.TextField;
 
 public class MainController {
 
@@ -21,12 +24,20 @@ public class MainController {
     @FXML
     private void handleButtonAction(ActionEvent event) throws IOException {
     	
-    	Stage ventana = new Stage();
-    	Parent root = FMXLLoader.load(getClass().getResource(".../modal/Modal.fmxl"));
+    	Stage dialog = new Stage();
+    	
+    	Node source = (Node)event.getSource();
+    	Stage parent = (Stage)source.getScene().getWindow();
+    	
+    	dialog.initOwner(parent);
+    	dialog.Modality(Modality.APPLICATION_MODAL);
+    	
+    	Parent root = FMXLLoader.load(getClass.getResource("../modal/Modal.xml"));
     	Scene scene = new Scene(root);
-    	Label label = (Label)root.getChildrenUnmodifiable().get(0);
+    	Label laber = (Label)root.getChildrenUnmodifiable().get(0);
     	label.setText(textfield.getText());
-    	ventana.setScene(scene);
-    	ventana.show();
+    	
+    	dialog.setScene(scene);
+    	dialog.show();
     }
 }
